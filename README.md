@@ -61,3 +61,53 @@ function findCityWithMaxAverageTemperature(data) {
     }
     return `HottestCity: ${cityWithMaxAverage}`;
 }
+
+
+
+
+
+VARIANT 2
+
+
+import _ from 'lodash';
+
+export default function (content) {
+  // FIRST STEP
+  const rows = content.split('\n');
+  const data = rows
+    .slice(1, -1)
+    .map((row) => row.split(';').slice(0, 18)
+      .map((el) => el.trim()));
+  console.log(`Count: ${data.length}`);
+
+  // SECOND STEP
+
+  const allCities = data.map((el) => el[2]);
+  console.log(`Cities: ${allCities.join(', ')}`);
+
+  // THIRD STEP
+
+  const allSalaries = data
+    .map((el) => el[5])
+    .map((el) => parseInt(el, 10));
+  const maxSalary = Math.max(...allSalaries);
+  console.log(`Maximum salary: ${maxSalary}`);
+
+  // FOURTH STEP
+
+  const education = data
+    .map((el) => el[6])
+    .map((el) => el.split(' ')[0])
+    .filter((el) => el === 'Высшее');
+  console.log(`Graduated: ${education.length}`);
+
+  // FIFTH STEP
+
+  const companyTypes = data
+    .map((el) => el[0])
+    .map((el) => el.split(' ')[0]);
+  const uniqTypes = _.uniq(companyTypes);
+  console.log(`Company types: ${uniqTypes.join(', ')}`);
+
+  // END
+}
